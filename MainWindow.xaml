@@ -1,0 +1,72 @@
+﻿<Window x:Class="WpfApplication1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApplication1"
+        mc:Ignorable="d"
+        Title="GreenTooth" Height="350" MaxHeight="350" MinHeight="350" Width="525" MaxWidth="525" MinWidth="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBox Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0">Devices</TextBox>
+        <ListBox x:Name="btDevices" Width="250"  Height="250" HorizontalAlignment="Center" VerticalAlignment="Bottom" SelectionChanged="btDevices_SelectionChanged" Grid.Column="0" Grid.Row="1">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding DeviceName}" Margin="0,0,20,0" HorizontalAlignment="Left"/>
+                            <TextBlock Text="{Binding DeviceAddress}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        <Button Name="GetDevicesBtn" Content="Find Devices" Grid.Row="2" Width="100" Height="20" HorizontalAlignment="Left" Click="GetDevicesBtn_Click" Margin="10,0,0,0"></Button>
+        <Button Name="SetDefaultDeviceBtn" Content="Set Default Device" Width="120" Height="20" HorizontalAlignment="Right" Click="SetDefaultDeviceBtn_Click" Grid.Row="2" Margin="0,0,10,0"></Button>
+
+        <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">Settings</TextBlock>
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center">Start With Windows</TextBlock>
+            <CheckBox Name="WinStartCB" Margin="10,0,0,0" Click="WinStartCB_Click" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Left"></CheckBox>
+
+            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center"  Grid.Row="1">Start When Opened</TextBlock>
+            <CheckBox Name="StartOnOpenCB" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Click="StartOnOpenCB_Click"></CheckBox>
+
+            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="2">Start Minimised</TextBlock>
+            <CheckBox Name="StartMinimisedCB" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Click="StartMinimisedCB_Click"></CheckBox>
+
+            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" TextAlignment="Center">Device Check Interval (min)</TextBlock>
+            <TextBox Name="CheckIntervalTB" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" Margin="10,0,0,0" TextChanged="CheckIntervalTB_TextChanged" GotFocus="CheckIntervalTB_GotFocus"></TextBox>
+
+            <TextBlock Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Center">Current Device</TextBlock>
+            <TextBlock Name="CurrentDeviceTB" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"></TextBlock>
+        </Grid>
+
+        <Button Name="StartStopBtn" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Click="StartStopBtn_Click">Start/Stop</Button>
+        <TextBlock Name="RunStatusTB" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0"></TextBlock>
+        <WindowsFormsHost Height="100" Visibility="Hidden"/>
+    </Grid>
+</Window>
