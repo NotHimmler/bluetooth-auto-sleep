@@ -20,6 +20,7 @@ using InTheHand.Net.Sockets;
 using System.IO;
 using System.Threading;
 using System.Timers;
+using Microsoft.Win32;
 
 namespace WpfApplication1
 {
@@ -31,6 +32,7 @@ namespace WpfApplication1
         System.Timers.Timer deviceAvailableCheck;
         BluetoothDeviceInfo selectedDevice;
         int numTimesNotFound = 0;
+        RegistryKey startupKeys = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
         public MainWindow()
         {
@@ -48,6 +50,7 @@ namespace WpfApplication1
 
             CurrentDeviceTB.Text = Settings1.Default.SleepDeviceName;
             CheckIntervalTB.Text = Settings1.Default.CheckTime.ToString();
+
             if (Settings1.Default.StartMinimised)
             {
                 StartMinimisedCB.IsChecked = true;
@@ -125,8 +128,6 @@ namespace WpfApplication1
 
         private bool queryDevice(string addr)
         {
-
-            //Attempst to pair with bluetooth device - if successful returns true, else false
             bool isPaired = BluetoothSecurity.PairRequest(BluetoothAddress.Parse(addr), "123456");
 
             return isPaired;
@@ -189,6 +190,14 @@ namespace WpfApplication1
         {
             Settings1.Default.StartWithWindows = (bool)WinStartCB.IsChecked;
             Settings1.Default.Save();
+
+            if ((bool)WinStartCB.IsChecked)
+            {
+                startupKeys.SetValue("MyApp", "\""+System.Reflection.Assembly.GetExecutingAssembly().Location+"\"");
+            } else
+            {
+                startupKeys.DeleteValue("MyApp", false);
+            }
         }
 
         private void StartStopBtn_Click(object sender, RoutedEventArgs e)
